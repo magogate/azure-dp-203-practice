@@ -61,7 +61,7 @@
 							"typeProperties": {
 								"variableName": "intFileCounter",
 								"value": {
-									"value": "@item()",
+									"value": "@activity('get_hr_files_medata_from_storage').output.childItems.length",
 									"type": "Expression"
 								}
 							}
