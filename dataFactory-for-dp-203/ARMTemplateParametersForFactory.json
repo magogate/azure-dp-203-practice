@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "dataFactory-for-dp-203"
+		},
+		"linkedsrv_for_storageaccthotfordp203_accountKey": {
+			"value": ""
+		},
+		"linkedsrv_for_storageaccthotfordp203_properties_typeProperties_url": {
+			"value": "https://storageaccthotfordp203.dfs.core.windows.net/"
+		}
+	}
+}
