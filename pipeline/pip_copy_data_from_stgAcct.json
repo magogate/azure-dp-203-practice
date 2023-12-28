@@ -33,7 +33,11 @@
 							"type": "AzureBlobFSWriteSettings",
 							"metadata": [
 								{
-									"value": ""
+									"name": "DataFactoryName",
+									"value": {
+										"value": "@pipeline().DataFactory",
+										"type": "Expression"
+									}
 								}
 							]
 						},
@@ -195,7 +199,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "csv_dataset_for_hr_db_files",
+						"referenceName": "csv_dataset_for_hr_db_files_output",
 						"type": "DatasetReference"
 					}
 				]
