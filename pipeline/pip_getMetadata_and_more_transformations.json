@@ -69,29 +69,6 @@
 						}
 					]
 				}
-			},
-			{
-				"name": "filter_validation",
-				"type": "Filter",
-				"dependsOn": [
-					{
-						"activity": "For-each-file-in-container",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@activity('get_hr_files_medata_from_storage').output.itemNamevariables('intFileCounter')",
-						"type": "Expression"
-					},
-					"condition": {
-						"value": "@greater(variables('intFileCounter'),20)",
-						"type": "Expression"
-					}
-				}
 			}
 		],
 		"variables": {
