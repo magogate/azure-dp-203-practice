@@ -82,7 +82,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@greater(variables('intFileCounter'),6)",
+									"value": "@greater(variables('intFileCounter'),5)",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
