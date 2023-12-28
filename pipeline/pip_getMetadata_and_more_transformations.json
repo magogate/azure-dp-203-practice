@@ -32,7 +32,7 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "For-each-file-in-container",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -42,7 +42,32 @@
 						]
 					}
 				],
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('get_hr_files_medata_from_storage').output.childItems",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "IncreaseFileCounter",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "intFileCounter",
+								"value": {
+									"value": "@add(variables('intFileCounter'),1)",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
 			}
 		],
 		"variables": {
