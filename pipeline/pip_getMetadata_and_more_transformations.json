@@ -84,23 +84,18 @@
 								"expression": {
 									"value": "@greater(variables('intFileCounter'),6)",
 									"type": "Expression"
-								}
-							}
-						},
-						{
-							"name": "Wait True",
-							"type": "Wait",
-							"dependsOn": [
-								{
-									"activity": "If Condition1",
-									"dependencyConditions": [
-										"Skipped"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"waitTimeInSeconds": 1
+								},
+								"ifTrueActivities": [
+									{
+										"name": "Wait True",
+										"type": "Wait",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"waitTimeInSeconds": 1
+										}
+									}
+								]
 							}
 						},
 						{
