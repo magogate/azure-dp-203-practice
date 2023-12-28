@@ -50,7 +50,7 @@
 					},
 					"activities": [
 						{
-							"name": "IncreaseFileCounter",
+							"name": "Set variable1",
 							"type": "SetVariable",
 							"dependsOn": [],
 							"policy": {
@@ -61,7 +61,7 @@
 							"typeProperties": {
 								"variableName": "intFileCounter",
 								"value": {
-									"value": "@add(variables('intFileCounter'),1)",
+									"value": "@item()",
 									"type": "Expression"
 								}
 							}
