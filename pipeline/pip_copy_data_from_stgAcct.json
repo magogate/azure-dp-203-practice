@@ -4,6 +4,7 @@
 		"activities": [
 			{
 				"name": "Copy Employees Files",
+				"description": "Copy Employees Files from Storage Account",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -15,8 +16,25 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
 					"enableStaging": false
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "csv_dataset_for_hr_db_files",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []
