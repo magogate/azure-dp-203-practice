@@ -50,21 +50,10 @@
 					},
 					"activities": [
 						{
-							"name": "Set variable1",
-							"type": "SetVariable",
+							"name": "append variable by 1",
+							"type": "AppendVariable",
 							"dependsOn": [],
-							"policy": {
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "intFileCounter",
-								"value": {
-									"value": "@activity('get_hr_files_medata_from_storage').output.childItems.length",
-									"type": "Expression"
-								}
-							}
+							"userProperties": []
 						}
 					]
 				}
