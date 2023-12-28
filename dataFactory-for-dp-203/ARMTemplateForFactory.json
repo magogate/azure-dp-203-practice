@@ -30,6 +30,8 @@
 						"name": "Copy Employees Files - CSV to CSV",
 						"description": "Copy Employees Files from Storage Account",
 						"type": "Copy",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -235,8 +237,6 @@
 						"name": "Copy Employees Files - CSV to Parquett",
 						"description": "Copy Employees Files from Storage Account",
 						"type": "Copy",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -262,6 +262,7 @@
 								"type": "ParquetSink",
 								"storeSettings": {
 									"type": "AzureBlobFSWriteSettings",
+									"copyBehavior": "MergeFiles",
 									"metadata": [
 										{
 											"name": "DataFactoryName",
@@ -574,7 +575,7 @@
 						"folderPath": "test",
 						"fileSystem": "container-hr-database-csv-files"
 					},
-					"compressionCodec": "snappy"
+					"compressionCodec": "none"
 				},
 				"schema": []
 			},
