@@ -237,6 +237,8 @@
 						"name": "Copy Employees Files - CSV to Parquett",
 						"description": "Copy Employees Files from Storage Account",
 						"type": "Copy",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
