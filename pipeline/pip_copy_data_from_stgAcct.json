@@ -207,11 +207,9 @@
 				]
 			},
 			{
-				"name": "Copy Employees Files_copy1",
+				"name": "Copy Employees Files - CSV to Parquett",
 				"description": "Copy Employees Files from Storage Account",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -234,7 +232,7 @@
 						}
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "ParquetSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings",
 							"metadata": [
@@ -244,13 +242,18 @@
 										"value": "@pipeline().DataFactory",
 										"type": "Expression"
 									}
+								},
+								{
+									"name": "CreatedDate",
+									"value": {
+										"value": "@utcnow()",
+										"type": "Expression"
+									}
 								}
 							]
 						},
 						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"type": "ParquetWriteSettings"
 						}
 					},
 					"enableStaging": false,
@@ -405,7 +408,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "csv_dataset_for_hr_db_files_output",
+						"referenceName": "parquet_dataset_for_hr_db_files_output",
 						"type": "DatasetReference"
 					}
 				]

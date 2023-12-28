@@ -1,0 +1,20 @@
+{
+	"name": "parquet_dataset_for_hr_db_files_output",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedsrv_for_storageaccthotfordp203",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "test",
+				"fileSystem": "container-hr-database-csv-files"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
