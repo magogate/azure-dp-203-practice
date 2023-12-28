@@ -50,10 +50,21 @@
 					},
 					"activities": [
 						{
-							"name": "append variable by 1",
-							"type": "AppendVariable",
+							"name": "Set variable1",
+							"type": "SetVariable",
 							"dependsOn": [],
-							"userProperties": []
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "varTemp",
+								"value": {
+									"value": "@add(variables('intFileCounter'),1)",
+									"type": "Expression"
+								}
+							}
 						}
 					]
 				}
@@ -63,6 +74,9 @@
 			"intFileCounter": {
 				"type": "Integer",
 				"defaultValue": 0
+			},
+			"varTemp": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []
