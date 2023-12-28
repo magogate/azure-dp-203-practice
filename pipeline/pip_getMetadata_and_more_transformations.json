@@ -84,7 +84,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@variables('intFileCounter')",
+						"value": "@activity('get_hr_files_medata_from_storage').output.itemNamevariables('intFileCounter')",
 						"type": "Expression"
 					},
 					"condition": {
