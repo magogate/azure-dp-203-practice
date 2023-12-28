@@ -1,0 +1,9 @@
+{
+	"name": "dataFactory-for-dp-203",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "740a9bd1-601e-4475-a633-3a86bde4a1a2",
+		"tenantId": "1aed4588-b8ce-43a8-a775-989538fd30d8"
+	}
+}
