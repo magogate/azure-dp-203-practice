@@ -49,6 +49,7 @@
 						"value": "@activity('get_hr_files_medata_from_storage').output.childItems",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "Set variable1",
