@@ -51,7 +51,6 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "Employees.csv",
 						"folderPath": "HR_Database_Files",
 						"fileSystem": "container-hr-database-csv-files"
 					},
@@ -600,6 +599,100 @@
 				"[concat(variables('factoryId'), '/datasets/csv_dataset_for_hr_db_files')]",
 				"[concat(variables('factoryId'), '/datasets/csv_dataset_for_hr_db_files_output')]",
 				"[concat(variables('factoryId'), '/datasets/parquet_dataset_for_hr_db_files_output')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pip_getMetadata_and_more_transformations')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "get_hr_files_medata_from_storage",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "csv_dataset_for_hr_db_files",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"childItems"
+							],
+							"storeSettings": {
+								"type": "AzureBlobFSReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "DelimitedTextReadSettings"
+							}
+						}
+					},
+					{
+						"name": "For-each-file-in-container",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "get_hr_files_medata_from_storage",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('get_hr_files_medata_from_storage').output.childItems",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Set variable1",
+									"type": "SetVariable",
+									"dependsOn": [],
+									"policy": {
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "varTemp",
+										"value": {
+											"value": "@add(variables('intFileCounter'),1)",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"intFileCounter": {
+						"type": "Integer",
+						"defaultValue": 0
+					},
+					"varTemp": {
+						"type": "Integer"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/csv_dataset_for_hr_db_files')]"
 			]
 		}
 	]
