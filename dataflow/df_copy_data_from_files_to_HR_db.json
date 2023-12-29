@@ -31,7 +31,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
-				"     wildcardPaths:['HR_Database_Files\\Employees.csv']) ~> srcHrFiles"
+				"     wildcardPaths:['Employees.csv']) ~> srcHrFiles"
 			]
 		}
 	}
