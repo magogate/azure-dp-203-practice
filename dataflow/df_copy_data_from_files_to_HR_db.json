@@ -30,8 +30,7 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false,",
-				"     wildcardPaths:['Employees.csv']) ~> srcHrFiles"
+				"     ignoreNoFilesFound: false) ~> srcHrFiles"
 			]
 		}
 	}
