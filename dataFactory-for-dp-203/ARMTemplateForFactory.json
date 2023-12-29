@@ -235,6 +235,52 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/pip-df-move-data-from-csv-to-db')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "call data flow copy data from file",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df_copy_data_from_files_to_HR_db",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"srcHrFiles": {},
+									"tgtEmployees": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/df_copy_data_from_files_to_HR_db')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pip-storedProc-Lookup')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
