@@ -1,0 +1,14 @@
+{
+	"name": "df_copy_data_from_files_to_HR_db",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				""
+			]
+		}
+	}
+}
