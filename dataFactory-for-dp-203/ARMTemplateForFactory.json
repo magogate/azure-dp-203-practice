@@ -742,6 +742,37 @@
 								"type": "Expression"
 							}
 						}
+					},
+					{
+						"name": "ForEach-item-in-array",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Validate Array",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@variables('varFileNameArray')",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Wait1",
+									"type": "Wait",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"waitTimeInSeconds": 1
+									}
+								}
+							]
+						}
 					}
 				],
 				"policy": {
