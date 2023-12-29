@@ -64,7 +64,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup get DepIds from Emp').output",
+						"value": "@activity('Lookup get DepIds from Emp').output.pipelineReturnValue",
 						"type": "Expression"
 					},
 					"activities": [
