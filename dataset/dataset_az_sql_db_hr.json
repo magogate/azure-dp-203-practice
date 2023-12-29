@@ -1,0 +1,12 @@
+{
+	"name": "dataset_az_sql_db_hr",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linked_srv_az_sql_srv",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}
