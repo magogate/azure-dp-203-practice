@@ -68,6 +68,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
+						"fileName": "Employees.csv",
 						"folderPath": "HR_Database_Files",
 						"fileSystem": "container-hr-database-csv-files"
 					},
@@ -211,11 +212,13 @@
 					},
 					{
 						"name": "MANAGER_ID",
-						"type": "varchar"
+						"type": "int",
+						"precision": 10
 					},
 					{
 						"name": "DEPARTMENT_ID",
-						"type": "varchar"
+						"type": "int",
+						"precision": 10
 					}
 				],
 				"typeProperties": {
@@ -1328,6 +1331,100 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/csv_dataset_for_hr_db_files')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_copy_data_from_files_to_HR_db')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "csv_dataset_for_hr_db_files",
+								"type": "DatasetReference"
+							},
+							"name": "srcHrFiles"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "dataset_az_sql_db_hr",
+								"type": "DatasetReference"
+							},
+							"name": "tgtEmployees"
+						}
+					],
+					"transformations": [
+						{
+							"name": "handleNulls"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          EMPLOYEE_ID as string,",
+						"          FIRST_NAME as string,",
+						"          LAST_NAME as string,",
+						"          EMAIL as string,",
+						"          PHONE_NUMBER as string,",
+						"          HIRE_DATE as string,",
+						"          JOB_ID as string,",
+						"          SALARY as string,",
+						"          COMMISSION_PCT as string,",
+						"          MANAGER_ID as string,",
+						"          DEPARTMENT_ID as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> srcHrFiles",
+						"srcHrFiles derive(DEPARTMENT_ID_Drv = case(DEPARTMENT_ID!='NULL',DEPARTMENT_ID),",
+						"          Manager_Id_Drv = case(MANAGER_ID != 'NULL', MANAGER_ID)) ~> handleNulls",
+						"handleNulls sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          EMPLOYEE_ID as integer,",
+						"          FIRST_NAME as string,",
+						"          LAST_NAME as string,",
+						"          EMAIL as string,",
+						"          PHONE_NUMBER as string,",
+						"          HIRE_DATE as timestamp,",
+						"          JOB_ID as string,",
+						"          SALARY as integer,",
+						"          COMMISSION_PCT as decimal(9,2),",
+						"          MANAGER_ID as integer,",
+						"          DEPARTMENT_ID as integer",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     truncate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          EMPLOYEE_ID,",
+						"          FIRST_NAME,",
+						"          LAST_NAME,",
+						"          EMAIL,",
+						"          PHONE_NUMBER,",
+						"          HIRE_DATE,",
+						"          JOB_ID,",
+						"          SALARY,",
+						"          COMMISSION_PCT,",
+						"          MANAGER_ID = Manager_Id_Drv,",
+						"          DEPARTMENT_ID = DEPARTMENT_ID_Drv",
+						"     )) ~> tgtEmployees"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/csv_dataset_for_hr_db_files')]",
+				"[concat(variables('factoryId'), '/datasets/dataset_az_sql_db_hr')]"
 			]
 		}
 	]
