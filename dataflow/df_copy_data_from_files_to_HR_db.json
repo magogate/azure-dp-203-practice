@@ -21,7 +21,11 @@
 					"name": "tgtEmployees"
 				}
 			],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "handleNulls"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          EMPLOYEE_ID as string,",
@@ -39,7 +43,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> srcHrFiles",
-				"srcHrFiles sink(allowSchemaDrift: true,",
+				"srcHrFiles derive(DEPARTMENT_ID_Drv = case(DEPARTMENT_ID!='NULL',DEPARTMENT_ID)) ~> handleNulls",
+				"handleNulls sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          EMPLOYEE_ID as integer,",
@@ -64,13 +69,17 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
+				"          EMPLOYEE_ID,",
 				"          FIRST_NAME,",
 				"          LAST_NAME,",
 				"          EMAIL,",
 				"          PHONE_NUMBER,",
+				"          HIRE_DATE,",
 				"          JOB_ID,",
+				"          SALARY,",
+				"          COMMISSION_PCT,",
 				"          MANAGER_ID,",
-				"          DEPARTMENT_ID",
+				"          DEPARTMENT_ID = DEPARTMENT_ID_Drv",
 				"     )) ~> tgtEmployees"
 			]
 		}
