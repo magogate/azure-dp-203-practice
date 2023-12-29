@@ -1,6 +1,59 @@
 {
 	"name": "pip-storedProc-Lookup",
 	"properties": {
+		"activities": [
+			{
+				"name": "Get Dep Names from Emp table",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[usp_getDepartmentIdsFromEmp]"
+				},
+				"linkedServiceName": {
+					"referenceName": "linked_srv_az_sql_srv",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "ForEach_DepartmentId",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get Dep Names from Emp table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Dep Names from Emp table').output.pipelineReturnValue",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Wait For 1 Sec",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 1
+							}
+						}
+					]
+				}
+			}
+		],
 		"annotations": []
 	}
 }
