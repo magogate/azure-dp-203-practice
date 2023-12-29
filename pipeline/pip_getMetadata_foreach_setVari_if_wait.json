@@ -1,5 +1,5 @@
 {
-	"name": "pip_getMetadata_and_more_transformations",
+	"name": "pip_getMetadata_foreach_setVari_if_wait",
 	"properties": {
 		"activities": [
 			{
