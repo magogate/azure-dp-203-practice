@@ -63,6 +63,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup get DepIds from Emp').output.value",
+						"type": "Expression"
+					},
 					"activities": [
 						{
 							"name": "Wait For 1 Sec",
