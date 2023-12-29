@@ -51,11 +51,13 @@
 			},
 			{
 				"name": "MANAGER_ID",
-				"type": "varchar"
+				"type": "int",
+				"precision": 10
 			},
 			{
 				"name": "DEPARTMENT_ID",
-				"type": "varchar"
+				"type": "int",
+				"precision": 10
 			}
 		],
 		"typeProperties": {

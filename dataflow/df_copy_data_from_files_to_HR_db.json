@@ -12,7 +12,15 @@
 					"name": "srcHrFiles"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dataset_az_sql_db_hr",
+						"type": "DatasetReference"
+					},
+					"name": "tgtEmployees"
+				}
+			],
 			"transformations": [],
 			"scriptLines": [
 				"source(output(",
@@ -30,7 +38,40 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> srcHrFiles"
+				"     ignoreNoFilesFound: false) ~> srcHrFiles",
+				"srcHrFiles sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          EMPLOYEE_ID as integer,",
+				"          FIRST_NAME as string,",
+				"          LAST_NAME as string,",
+				"          EMAIL as string,",
+				"          PHONE_NUMBER as string,",
+				"          HIRE_DATE as timestamp,",
+				"          JOB_ID as string,",
+				"          SALARY as integer,",
+				"          COMMISSION_PCT as decimal(9,2),",
+				"          MANAGER_ID as integer,",
+				"          DEPARTMENT_ID as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          FIRST_NAME,",
+				"          LAST_NAME,",
+				"          EMAIL,",
+				"          PHONE_NUMBER,",
+				"          JOB_ID,",
+				"          MANAGER_ID,",
+				"          DEPARTMENT_ID",
+				"     )) ~> tgtEmployees"
 			]
 		}
 	}
