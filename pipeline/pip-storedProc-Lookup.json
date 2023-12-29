@@ -64,7 +64,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup get DepIds from Emp').output.value.Department_ID",
+						"value": "@activity('Lookup get DepIds from Emp').output",
 						"type": "Expression"
 					},
 					"activities": [
