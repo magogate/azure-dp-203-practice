@@ -49,10 +49,30 @@
 						"value": "@activity('Get HR DB Files').output.childItems",
 						"type": "Expression"
 					},
-					"isSequential": true
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "append file name to variable",
+							"type": "AppendVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "varFileNameArray",
+								"value": {
+									"value": "@item()",
+									"type": "Expression"
+								}
+							}
+						}
+					]
 				}
 			}
 		],
+		"variables": {
+			"varFileNameArray": {
+				"type": "Array"
+			}
+		},
 		"annotations": []
 	}
 }
