@@ -33,41 +33,6 @@
 				}
 			},
 			{
-				"name": "For Each HR Files",
-				"type": "ForEach",
-				"dependsOn": [
-					{
-						"activity": "Check if File Cnt is more than 5",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@activity('Get HR DB Files').output.childItems",
-						"type": "Expression"
-					},
-					"isSequential": true,
-					"activities": [
-						{
-							"name": "append file name to variable",
-							"type": "AppendVariable",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "varFileNameArray",
-								"value": {
-									"value": "@item().name",
-									"type": "Expression"
-								}
-							}
-						}
-					]
-				}
-			},
-			{
 				"name": "Check if File Cnt is more than 5",
 				"type": "IfCondition",
 				"dependsOn": [
@@ -83,7 +48,18 @@
 					"expression": {
 						"value": "@greater(length(activity('Get HR DB Files').output.childItems),5)",
 						"type": "Expression"
-					}
+					},
+					"ifTrueActivities": [
+						{
+							"name": "Wait True",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 1
+							}
+						}
+					]
 				}
 			}
 		],
