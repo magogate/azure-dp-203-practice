@@ -43,7 +43,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> srcHrFiles",
-				"srcHrFiles derive(DEPARTMENT_ID_Drv = case(DEPARTMENT_ID!='NULL',DEPARTMENT_ID)) ~> handleNulls",
+				"srcHrFiles derive(DEPARTMENT_ID_Drv = case(DEPARTMENT_ID!='NULL',DEPARTMENT_ID),",
+				"          Manager_Id_Drv = case(MANAGER_ID != 'NULL', MANAGER_ID)) ~> handleNulls",
 				"handleNulls sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -78,7 +79,7 @@
 				"          JOB_ID,",
 				"          SALARY,",
 				"          COMMISSION_PCT,",
-				"          MANAGER_ID,",
+				"          MANAGER_ID = Manager_Id_Drv,",
 				"          DEPARTMENT_ID = DEPARTMENT_ID_Drv",
 				"     )) ~> tgtEmployees"
 			]
