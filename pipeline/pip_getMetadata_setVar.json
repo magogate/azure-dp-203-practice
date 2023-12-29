@@ -106,10 +106,30 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Validate Array",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "varTemp",
+					"value": {
+						"value": "@variables('varFileNameArray')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"variables": {
 			"varFileNameArray": {
+				"type": "Array"
+			},
+			"varTemp": {
 				"type": "Array"
 			}
 		},
