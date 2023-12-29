@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "dataFactory-for-dp-203"
 		},
+		"linked_srv_az_sql_srv_connectionString": {
+			"value": ""
+		},
 		"linkedsrv_for_storageaccthotfordp203_accountKey": {
 			"value": ""
 		},

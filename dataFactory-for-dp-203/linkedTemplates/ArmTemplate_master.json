@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "dataFactory-for-dp-203"
 		},
+		"linked_srv_az_sql_srv_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'linked_srv_az_sql_srv'"
+		},
 		"linkedsrv_for_storageaccthotfordp203_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'linkedsrv_for_storageaccthotfordp203'"
@@ -41,6 +45,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"linked_srv_az_sql_srv_connectionString": {
+						"value": "[parameters('linked_srv_az_sql_srv_connectionString')]"
 					},
 					"linkedsrv_for_storageaccthotfordp203_accountKey": {
 						"value": "[parameters('linkedsrv_for_storageaccthotfordp203_accountKey')]"
