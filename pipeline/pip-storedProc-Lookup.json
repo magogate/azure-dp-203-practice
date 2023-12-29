@@ -49,6 +49,32 @@
 					},
 					"firstRowOnly": false
 				}
+			},
+			{
+				"name": "ForEach Dep Id in Emp Table",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup get DepIds from Emp",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"activities": [
+						{
+							"name": "Wait For 1 Sec",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 1
+							}
+						}
+					]
+				}
 			}
 		],
 		"annotations": []
