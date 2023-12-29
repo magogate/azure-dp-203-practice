@@ -1,0 +1,6 @@
+{
+	"name": "pip-copy-files-from-storage-to-sqldb",
+	"properties": {
+		"annotations": []
+	}
+}
