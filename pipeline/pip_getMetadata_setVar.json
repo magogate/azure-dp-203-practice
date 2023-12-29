@@ -72,6 +72,25 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "For Each HR Files",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Check if File Cnt is more than 5",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get HR DB Files').output.childItems",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"variables": {
