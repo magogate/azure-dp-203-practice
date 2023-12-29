@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "Employees.cav",
 				"folderPath": "HR_Database_Files",
 				"fileSystem": "container-hr-database-csv-files"
 			},
