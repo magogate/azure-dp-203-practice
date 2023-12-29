@@ -46,9 +46,20 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@greater(length(activity('Get HR DB Files').output.childItems),5)",
+						"value": "@greater(length(activity('Get HR DB Files').output.childItems),15)",
 						"type": "Expression"
 					},
+					"ifFalseActivities": [
+						{
+							"name": "Wait False",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 1
+							}
+						}
+					],
 					"ifTrueActivities": [
 						{
 							"name": "Wait True",
