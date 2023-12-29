@@ -30,6 +30,22 @@
 						"type": "DelimitedTextReadSettings"
 					}
 				}
+			},
+			{
+				"name": "Wait For 1 Sec",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "Get HR DB Files",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 1
+				}
 			}
 		],
 		"annotations": []
