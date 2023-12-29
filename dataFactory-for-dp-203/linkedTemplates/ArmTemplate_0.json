@@ -238,7 +238,6 @@
 								"type": "AzureSqlSink",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
-								"tableOption": "autoCreate",
 								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
@@ -253,8 +252,8 @@
 										},
 										"sink": {
 											"name": "EMPLOYEE_ID",
-											"type": "String",
-											"physicalType": "String"
+											"type": "Int32",
+											"physicalType": "int"
 										}
 									},
 									{
@@ -266,7 +265,7 @@
 										"sink": {
 											"name": "FIRST_NAME",
 											"type": "String",
-											"physicalType": "String"
+											"physicalType": "varchar"
 										}
 									},
 									{
@@ -278,7 +277,7 @@
 										"sink": {
 											"name": "LAST_NAME",
 											"type": "String",
-											"physicalType": "String"
+											"physicalType": "varchar"
 										}
 									},
 									{
@@ -290,7 +289,7 @@
 										"sink": {
 											"name": "EMAIL",
 											"type": "String",
-											"physicalType": "String"
+											"physicalType": "varchar"
 										}
 									},
 									{
@@ -302,7 +301,7 @@
 										"sink": {
 											"name": "PHONE_NUMBER",
 											"type": "String",
-											"physicalType": "String"
+											"physicalType": "varchar"
 										}
 									},
 									{
@@ -313,8 +312,8 @@
 										},
 										"sink": {
 											"name": "HIRE_DATE",
-											"type": "String",
-											"physicalType": "String"
+											"type": "DateTime",
+											"physicalType": "datetime2"
 										}
 									},
 									{
@@ -326,7 +325,7 @@
 										"sink": {
 											"name": "JOB_ID",
 											"type": "String",
-											"physicalType": "String"
+											"physicalType": "varchar"
 										}
 									},
 									{
@@ -337,8 +336,8 @@
 										},
 										"sink": {
 											"name": "SALARY",
-											"type": "String",
-											"physicalType": "String"
+											"type": "Int32",
+											"physicalType": "int"
 										}
 									},
 									{
@@ -349,8 +348,10 @@
 										},
 										"sink": {
 											"name": "COMMISSION_PCT",
-											"type": "String",
-											"physicalType": "String"
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 9
 										}
 									},
 									{
@@ -361,8 +362,8 @@
 										},
 										"sink": {
 											"name": "MANAGER_ID",
-											"type": "String",
-											"physicalType": "String"
+											"type": "Int32",
+											"physicalType": "int"
 										}
 									},
 									{
@@ -373,8 +374,8 @@
 										},
 										"sink": {
 											"name": "DEPARTMENT_ID",
-											"type": "String",
-											"physicalType": "String"
+											"type": "Int32",
+											"physicalType": "int"
 										}
 									}
 								],
