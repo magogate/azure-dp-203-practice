@@ -37,7 +37,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Get HR DB Files",
+						"activity": "Check if File Cnt is more than 5",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -65,6 +65,25 @@
 							}
 						}
 					]
+				}
+			},
+			{
+				"name": "Check if File Cnt is more than 5",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Get HR DB Files",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@greater(length(activity('Get HR DB Files').output.childItems),5)",
+						"type": "Expression"
+					}
 				}
 			}
 		],
