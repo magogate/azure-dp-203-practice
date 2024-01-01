@@ -12,6 +12,10 @@
 					"name": "EmpInfo"
 				},
 				{
+					"dataset": {
+						"referenceName": "csv_dataset_for_hr_db_files_Departments",
+						"type": "DatasetReference"
+					},
 					"name": "DepartmentInfo"
 				}
 			],
@@ -39,8 +43,15 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> EmpInfo",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> DepartmentInfo",
+				"source(output(",
+				"          DEPARTMENT_ID as short 'string',",
+				"          DEPARTMENT_NAME as string,",
+				"          MANAGER_ID as string 'string',",
+				"          LOCATION_ID as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> DepartmentInfo",
 				"EmpInfo lookup(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
 				"     multiple: false,",
 				"     pickup: 'first',",
