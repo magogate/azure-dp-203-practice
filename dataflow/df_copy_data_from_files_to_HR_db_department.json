@@ -23,6 +23,9 @@
 			"transformations": [
 				{
 					"name": "lookupDepNameOnFlatFile"
+				},
+				{
+					"name": "select2"
 				}
 			],
 			"scriptLines": [
@@ -56,7 +59,24 @@
 				"     multiple: false,",
 				"     pickup: 'first',",
 				"     asc(DepartmentInfo@DEPARTMENT_ID, true),",
-				"     broadcast: 'auto')~> lookupDepNameOnFlatFile"
+				"     broadcast: 'auto')~> lookupDepNameOnFlatFile",
+				"lookupDepNameOnFlatFile select(mapColumn(",
+				"          EMPLOYEE_ID,",
+				"          FIRST_NAME,",
+				"          LAST_NAME,",
+				"          EMAIL,",
+				"          PHONE_NUMBER,",
+				"          HIRE_DATE,",
+				"          JOB_ID,",
+				"          SALARY,",
+				"          COMMISSION_PCT,",
+				"          DEPARTMENT_ID = EmpInfo@DEPARTMENT_ID,",
+				"          DEPARTMENT_NAME,",
+				"          MANAGER_ID = EmpInfo@MANAGER_ID,",
+				"          LOCATION_ID",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> select2"
 			]
 		}
 	}
