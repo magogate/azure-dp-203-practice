@@ -254,7 +254,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "df_copy_data_from_files_to_HR_db",
+								"referenceName": "df_copy_data_from_files_to_HR_db_employees",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -277,7 +277,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/df_copy_data_from_files_to_HR_db')]"
+				"[concat(variables('factoryId'), '/dataflows/df_copy_data_from_files_to_HR_db_employees')]"
 			]
 		},
 		{
@@ -1380,7 +1380,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/df_copy_data_from_files_to_HR_db')]",
+			"name": "[concat(parameters('factoryName'), '/df_copy_data_from_files_to_HR_db_employees')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1471,6 +1471,313 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/csv_dataset_for_hr_db_files')]",
 				"[concat(variables('factoryId'), '/datasets/dataset_az_sql_db_hr')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_copy_data_from_files_to_HR_db_department')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "dataset_az_sql_db_hr",
+								"type": "DatasetReference"
+							},
+							"name": "EmpInfo"
+						},
+						{
+							"dataset": {
+								"referenceName": "csv_dataset_for_hr_db_files_Departments",
+								"type": "DatasetReference"
+							},
+							"name": "DepartmentInfo"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "dataset_az_sql_db_hr_empDep",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "lookupDepNameOnFlatFile"
+						},
+						{
+							"name": "select2"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          EMPLOYEE_ID as integer,",
+						"          FIRST_NAME as string,",
+						"          LAST_NAME as string,",
+						"          EMAIL as string,",
+						"          PHONE_NUMBER as string,",
+						"          HIRE_DATE as timestamp,",
+						"          JOB_ID as string,",
+						"          SALARY as integer,",
+						"          COMMISSION_PCT as decimal(9,2),",
+						"          MANAGER_ID as integer,",
+						"          DEPARTMENT_ID as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> EmpInfo",
+						"source(output(",
+						"          DEPARTMENT_ID as short,",
+						"          DEPARTMENT_NAME as string,",
+						"          MANAGER_ID as string,",
+						"          LOCATION_ID as short",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> DepartmentInfo",
+						"EmpInfo, DepartmentInfo lookup(EmpInfo@DEPARTMENT_ID == DepartmentInfo@DEPARTMENT_ID,",
+						"     multiple: false,",
+						"     pickup: 'first',",
+						"     asc(DepartmentInfo@DEPARTMENT_ID, true),",
+						"     broadcast: 'auto')~> lookupDepNameOnFlatFile",
+						"lookupDepNameOnFlatFile select(mapColumn(",
+						"          EMPLOYEE_ID,",
+						"          FIRST_NAME,",
+						"          LAST_NAME,",
+						"          EMAIL,",
+						"          PHONE_NUMBER,",
+						"          HIRE_DATE,",
+						"          JOB_ID,",
+						"          SALARY,",
+						"          COMMISSION_PCT,",
+						"          DEPARTMENT_ID = EmpInfo@DEPARTMENT_ID,",
+						"          DEPARTMENT_NAME,",
+						"          MANAGER_ID = EmpInfo@MANAGER_ID,",
+						"          LOCATION_ID",
+						"     ),",
+						"     skipDuplicateMapInputs: false,",
+						"     skipDuplicateMapOutputs: false) ~> select2",
+						"select2 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          Employee_ID as string,",
+						"          First_Name as string,",
+						"          Last_Name as string,",
+						"          Email as string,",
+						"          Phone_Number as string,",
+						"          Hire_Date as string,",
+						"          Job_ID as string,",
+						"          Salary as string,",
+						"          Commission_PCT as string,",
+						"          Department_ID as string,",
+						"          Department_Name as string,",
+						"          Manager_ID as string,",
+						"          Location_Id as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     preSQLs:['truncate table dbo.EmpDep'],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     saveOrder: 1,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          Employee_ID = EMPLOYEE_ID,",
+						"          First_Name = FIRST_NAME,",
+						"          Last_Name = LAST_NAME,",
+						"          Email = EMAIL,",
+						"          Phone_Number = PHONE_NUMBER,",
+						"          Hire_Date = HIRE_DATE,",
+						"          Job_ID = JOB_ID,",
+						"          Salary = SALARY,",
+						"          Commission_PCT = COMMISSION_PCT,",
+						"          Department_ID = DEPARTMENT_ID,",
+						"          Department_Name = DEPARTMENT_NAME,",
+						"          Manager_ID = MANAGER_ID,",
+						"          Location_Id = LOCATION_ID",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/dataset_az_sql_db_hr')]",
+				"[concat(variables('factoryId'), '/datasets/csv_dataset_for_hr_db_files_Departments')]",
+				"[concat(variables('factoryId'), '/datasets/dataset_az_sql_db_hr_empDep')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/csv_dataset_for_hr_db_files_Departments')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "linkedsrv_for_storageaccthotfordp203",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Departments.csv",
+						"folderPath": "HR_Database_Files",
+						"fileSystem": "container-hr-database-csv-files"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "DEPARTMENT_ID",
+						"type": "String"
+					},
+					{
+						"name": "DEPARTMENT_NAME",
+						"type": "String"
+					},
+					{
+						"name": "MANAGER_ID",
+						"type": "String"
+					},
+					{
+						"name": "LOCATION_ID",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/linkedsrv_for_storageaccthotfordp203')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pip-df-lookup-flatfile')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df_copy_data_from_files_to_HR_db_department",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"EmpInfo": {},
+									"DepartmentInfo": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/df_copy_data_from_files_to_HR_db_department')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataset_az_sql_db_hr_empDep')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "linked_srv_az_sql_srv",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Employee_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "First_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Last_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Email",
+						"type": "varchar"
+					},
+					{
+						"name": "Phone_Number",
+						"type": "varchar"
+					},
+					{
+						"name": "Hire_Date",
+						"type": "varchar"
+					},
+					{
+						"name": "Job_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "Salary",
+						"type": "varchar"
+					},
+					{
+						"name": "Commission_PCT",
+						"type": "varchar"
+					},
+					{
+						"name": "Department_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "Department_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Manager_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "Location_Id",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "EmpDep"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/linked_srv_az_sql_srv')]"
 			]
 		}
 	]
