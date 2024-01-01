@@ -44,17 +44,18 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> EmpInfo",
 				"source(output(",
-				"          DEPARTMENT_ID as short 'string',",
-				"          DEPARTMENT_NAME as string,",
+				"          DEPARTMENT_ID as short 'short',",
+				"          DEPARTMENT_NAME as string 'string',",
 				"          MANAGER_ID as string 'string',",
-				"          LOCATION_ID as string",
+				"          LOCATION_ID as string 'string'",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> DepartmentInfo",
-				"EmpInfo lookup(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"EmpInfo, DepartmentInfo lookup(EmpInfo@DEPARTMENT_ID == DepartmentInfo@DEPARTMENT_ID,",
 				"     multiple: false,",
 				"     pickup: 'first',",
+				"     asc(DepartmentInfo@DEPARTMENT_ID, true),",
 				"     broadcast: 'auto')~> lookupDepNameOnFlatFile"
 			]
 		}
