@@ -110,7 +110,22 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 1,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          Employee_ID = EMPLOYEE_ID,",
+				"          First_Name = FIRST_NAME,",
+				"          Last_Name = LAST_NAME,",
+				"          Email = EMAIL,",
+				"          Phone_Number = PHONE_NUMBER,",
+				"          Hire_Date = HIRE_DATE,",
+				"          Job_ID = JOB_ID,",
+				"          Salary = SALARY,",
+				"          Commission_PCT = COMMISSION_PCT,",
+				"          Department_ID = DEPARTMENT_ID,",
+				"          Department_Name = DEPARTMENT_NAME,",
+				"          Manager_ID = MANAGER_ID,",
+				"          Location_Id = LOCATION_ID",
+				"     )) ~> sink1"
 			]
 		}
 	}
