@@ -1,5 +1,5 @@
 {
-	"name": "df_copy_data_from_files_to_HR_db",
+	"name": "df_copy_data_from_files_to_HR_db_employees",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {

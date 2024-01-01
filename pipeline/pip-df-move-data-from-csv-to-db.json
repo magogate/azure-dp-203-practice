@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "df_copy_data_from_files_to_HR_db",
+						"referenceName": "df_copy_data_from_files_to_HR_db_employees",
 						"type": "DataFlowReference"
 					},
 					"compute": {
