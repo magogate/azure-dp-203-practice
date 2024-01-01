@@ -19,7 +19,11 @@
 					"name": "DepartmentInfo"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "lookupDepNameOnFlatFile"
@@ -76,7 +80,14 @@
 				"          LOCATION_ID",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> select2"
+				"     skipDuplicateMapOutputs: false) ~> select2",
+				"select2 sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: false,",
+				"     saveOrder: 1) ~> sink1"
 			]
 		}
 	}
