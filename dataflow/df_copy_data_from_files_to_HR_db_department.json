@@ -21,6 +21,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "dataset_az_sql_db_hr",
+						"type": "DatasetReference"
+					},
 					"name": "sink1"
 				}
 			],
@@ -81,13 +85,30 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> select2",
-				"select2 sink(validateSchema: false,",
+				"select2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          EMPLOYEE_ID as integer,",
+				"          FIRST_NAME as string,",
+				"          LAST_NAME as string,",
+				"          EMAIL as string,",
+				"          PHONE_NUMBER as string,",
+				"          HIRE_DATE as timestamp,",
+				"          JOB_ID as string,",
+				"          SALARY as integer,",
+				"          COMMISSION_PCT as decimal(9,2),",
+				"          MANAGER_ID as integer,",
+				"          DEPARTMENT_ID as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     store: 'cache',",
-				"     format: 'inline',",
-				"     output: false,",
-				"     saveOrder: 1) ~> sink1"
+				"     saveOrder: 1,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}

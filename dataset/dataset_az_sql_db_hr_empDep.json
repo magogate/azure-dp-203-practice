@@ -1,0 +1,69 @@
+{
+	"name": "dataset_az_sql_db_hr_empDep",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linked_srv_az_sql_srv",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Employee_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "First_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Last_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Email",
+				"type": "varchar"
+			},
+			{
+				"name": "Phone_Number",
+				"type": "varchar"
+			},
+			{
+				"name": "Hire_Date",
+				"type": "varchar"
+			},
+			{
+				"name": "Job_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "Salary",
+				"type": "varchar"
+			},
+			{
+				"name": "Commission_PCT",
+				"type": "varchar"
+			},
+			{
+				"name": "Department_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "Department_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Manager_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "Location_Id",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "EmpDep"
+		}
+	}
+}
